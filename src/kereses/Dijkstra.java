@@ -9,11 +9,13 @@ public class Dijkstra {
         Node end = graph.getNode(route[1]);
 
         double[] distances = new double[graph.getSize()];
+        double[] astarDistances = new double[graph.getSize()];
         ArrayList<Node> unexplored = new ArrayList<>(graph.getNodes());
 
 
         for(int i = 0; i < distances.length; i++){
             distances[i] = graph.getMaxDistance();
+            astarDistances[i] = distances[i] + straightDistance(graph.getNode(i), end);
         }
 
         distances[graph.getIndex(start)] = 0;
@@ -44,6 +46,10 @@ public class Dijkstra {
         }else{
             return -1;
         }
+    }
+
+    private double straightDistance(Node start, Node end){
+        return Math.sqrt(Math.pow(start.posX - end.posX, 2) + Math.pow(start.posY - end.posY, 2));
     }
 
     private int min(Graph graph, ArrayList<Node> unexplored, double[] distances){
