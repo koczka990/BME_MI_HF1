@@ -9,13 +9,15 @@ public class Dijkstra {
         Node end = graph.getNode(route[1]);
 
         double[] distances = new double[graph.getSize()];
-        double[] astarDistances = new double[graph.getSize()];
+        double[] straightDistances = new double[graph.getSize()];
+        double[] combinedDistances = new double[graph.getSize()];
         ArrayList<Node> unexplored = new ArrayList<>(graph.getNodes());
 
 
         for(int i = 0; i < distances.length; i++){
             distances[i] = graph.getMaxDistance();
-            astarDistances[i] = distances[i] + straightDistance(graph.getNode(i), end);
+            straightDistances[i] = straightDistance(graph.getNode(i),end);
+            combinedDistances[i] = distances[i] + straightDistances[i];
         }
 
         distances[graph.getIndex(start)] = 0;
@@ -23,7 +25,10 @@ public class Dijkstra {
 
         boolean found = false;
         while(!unexplored.isEmpty()){
-            currentNode = graph.getNode(min(graph, unexplored, distances));
+            for(int i = 0; i < distances.length; i++){
+                combinedDistances[i] = distances[i] + straightDistances[i];
+            }
+            currentNode = graph.getNode(min(graph, unexplored, combinedDistances));
 
             if (currentNode == end){
                 found = true;
@@ -63,6 +68,10 @@ public class Dijkstra {
             }
         }
         return index;
+    }
+
+    private void refresh(double[] a){
+
     }
 
 }
