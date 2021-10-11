@@ -37,6 +37,7 @@ public class Dijkstra {
             unexplored.remove(currentNode);
 
             //just a comment
+            //more comment
             for(Edge e : currentNode.getEdges()){
                 if(unexplored.contains(e.getDestination())){
                     double potentialDistance = distances[graph.getIndex(currentNode)] + e.getWeight();
